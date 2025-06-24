@@ -1,19 +1,24 @@
-📋 Project Description
-Tanzu's Creation is a JavaFX-based desktop application that allows users to manage jewelry products.
-It is inspired by my real-world online jewelry business.
+# Tanzu's Creation – JavaFX Desktop Application
 
-Users can:
+This is a desktop-based shopping application built using JavaFX. It’s designed around *Tanzu’s Creation*, a real boutique that offers products like jewelry, dresses, bags, accessories, and cosmetics. The purpose of this app is to simulate an online shopping experience in a desktop environment, complete with user registration, login, product browsing, and a basic cart system.
 
-Log in and Sign up
+---
 
-View a list of jewelry products
+## Features
 
-Add new products
+- User sign-up and login
+- Product listing with details
+- Add-to-cart functionality
+- Simple checkout simulation (no payment integration)
+- Data stored in MySQL
+- Interface designed with JavaFX SceneBuilder and styled using CSS
 
-Edit existing products
+---
 
-Delete products
+## Tech Stack
 
-Filter products by category (e.g., Rings, Necklaces, Bracelets)
-
-The system uses MySQL database to store product and user information, and the UI is designed using JavaFX SceneBuilder.
+- Java (JavaFX)
+- FXML (with SceneBuilder)
+- MySQL (via JDBC)
+- NetBeans IDE
+- CSS (for styling)
