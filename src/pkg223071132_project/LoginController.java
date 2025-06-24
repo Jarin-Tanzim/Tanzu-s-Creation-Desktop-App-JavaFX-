@@ -1,81 +1,98 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package pkg223071132_project;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Apollo Gadget
- */
 public class LoginController implements Initializable {
 
-    @FXML
-    private TextField usernamefield;
-    @FXML
-    private PasswordField passwordfield;
-    @FXML
-    private AnchorPane loginbutton;
-    @FXML
-    private Label errorlabel;
-    @FXML
-    private Button loginButton;
+    @FXML private TextField usernamefield;
+    @FXML private PasswordField passwordfield;
+    @FXML private AnchorPane loginbutton;
+    @FXML private Label errorlabel;
+    @FXML private Button loginButton;
+    @FXML private Hyperlink GoTosignup;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        // Initialization (if needed)
+    }
 
     @FXML
     private void handlelogin(ActionEvent event) {
-         String username = usernamefield.getText();
-    String password = passwordfield.getText();
+        String email = usernamefield.getText().trim();
+        String password = passwordfield.getText().trim();
 
-    if (username.equals("admin") && password.equals("admin123")) {
+        if (email.isEmpty() || password.isEmpty()) {
+            errorlabel.setText("Please enter both email and password.");
+            return;
+        }
+
         try {
-            // Load dashboard.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+            Connection conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/tanzu_app", "root", "1234"
+            );
+
+            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String fullName = rs.getString("full_name");
+
+                // Load Homepage
+                loadScene("homepage.fxml", "Welcome, " + fullName);
+
+                // Close the login window
+                ((Stage) loginButton.getScene().getWindow()).close();
+            } else {
+                errorlabel.setText("Invalid credentials.");
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+
+        } catch (Exception e) {
+            errorlabel.setText("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void loadScene(String fxmlFile, String title) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle(title);
+        stage.show();
+    }
+
+    @FXML
+    private void handleGoTosign(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("signup.fxml"));
             Parent root = loader.load();
-
-            // Optionally pass the username
-            DashboardController controller = loader.getController();
-            controller.setWelcomeText(username); // You must create this method in DashboardController
-
-            // Create and show new stage
             Stage stage = new Stage();
+            stage.setTitle("Sign Up");
             stage.setScene(new Scene(root));
-            stage.setTitle("Dashboard");
             stage.show();
 
-            // Close the login window
-            ((Stage) loginButton.getScene().getWindow()).close();
-
+            ((Stage) GoTosignup.getScene().getWindow()).close();
         } catch (IOException e) {
+            errorlabel.setText("Unable to load Sign Up page.");
             e.printStackTrace();
-            errorlabel.setText("Error loading dashboard.");
         }
-    } else {
-        errorlabel.setText("Invalid username or password.");
     }
-}
 }
