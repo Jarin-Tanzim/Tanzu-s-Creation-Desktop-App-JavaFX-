@@ -1,5 +1,5 @@
 
-/* Set background color for the root pane */
+
 .root {
     -fx-background-image: url("images/bg.png");
     -fx-background-repeat: no-repeat;
@@ -7,19 +7,19 @@
     -fx-background-position: center center;
 }
 
-/* Logo styling if needed */
+
 .image-view {
     -fx-effect: dropshadow(gaussian, #888888, 10, 0.5, 0.0, 0.0);
 }
 
-/* Title */
+
 .label-title {
     -fx-font-size: 20px;
     -fx-text-fill: #d4008f;
     -fx-font-weight: bold;
 }
 
-/* Input fields */
+
 .text-field,
 .password-field {
     -fx-background-radius: 10;
@@ -28,7 +28,7 @@
     -fx-padding: 6 10;
 }
 
-/* Login button */
+
 .button {
     -fx-background-color: linear-gradient(to right, #d4008f, #ff69b4);
     -fx-text-fill: white;
@@ -37,12 +37,12 @@
     -fx-padding: 6 20;
 }
 
-/* Hover effect */
+
 .button:hover {
     -fx-background-color: linear-gradient(to right, #ff69b4, #d4008f);
 }
 
-/* Error/success label */
+
 .error-label {
     -fx-text-fill: #c70000;
     -fx-font-style: italic;
