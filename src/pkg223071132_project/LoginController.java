@@ -23,7 +23,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Initialization (if needed)
+        
     }
 
     @FXML
@@ -49,11 +49,32 @@ public class LoginController implements Initializable {
 
             if (rs.next()) {
                 String fullName = rs.getString("full_name");
+                String role = rs.getString("role");
 
-                // Load Homepage
-                loadScene("homepage.fxml", "Welcome, " + fullName);
+                if (role.equalsIgnoreCase("admin")) {
+                    
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_panel.fxml"));
+                    Parent root = loader.load();
 
-                // Close the login window
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Admin Dashboard");
+                    stage.show();
+                } else {
+                    
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+                    Parent root = loader.load();
+
+                    HomepageController homepageController = loader.getController();
+                    homepageController.setLoggedIn(true); 
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Welcome, " + fullName);
+                    stage.show();
+                }
+
+                
                 ((Stage) loginButton.getScene().getWindow()).close();
             } else {
                 errorlabel.setText("Invalid credentials.");
@@ -67,16 +88,6 @@ public class LoginController implements Initializable {
             errorlabel.setText("Error: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private void loadScene(String fxmlFile, String title) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle(title);
-        stage.show();
     }
 
     @FXML
