@@ -25,7 +25,7 @@ public class SignupController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // ToggleGroup already set in FXML
+       
     }
 
     @FXML
@@ -52,12 +52,26 @@ public class SignupController implements Initializable {
                 "jdbc:mysql://localhost:3306/tanzu_app", "root", "1234"
             );
 
+           String checkSql = "SELECT id FROM users WHERE email = ?";
+           PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+           checkStmt.setString(1, email);
+           ResultSet checkResult = checkStmt.executeQuery();
+           if (checkResult.next()) {
+            ErrorLable.setText("Email already registered.");
+            checkResult.close();
+            checkStmt.close();
+            conn.close();
+            return;
+}
+checkResult.close();
+checkStmt.close();
+
             
             String sql = "INSERT INTO users (full_name, email, password, gender, role) VALUES (?, ?, ?, ?, 'customer')";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, fullName);
             stmt.setString(2, email);
-            stmt.setString(3, password);  // Optional: hash before saving
+            stmt.setString(3, password);  
             stmt.setString(4, gender);
 
             int result = stmt.executeUpdate();
@@ -65,7 +79,7 @@ public class SignupController implements Initializable {
                 ErrorLable.setText("Registration successful!");
                 clearFields();
 
-                //  Go to login page
+                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
