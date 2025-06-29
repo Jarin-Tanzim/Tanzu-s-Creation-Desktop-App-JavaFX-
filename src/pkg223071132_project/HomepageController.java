@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package pkg223071132_project;
 
 import java.net.URL;
@@ -10,53 +6,82 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-
+import javafx.scene.image.ImageView;
 
 public class HomepageController implements Initializable {
-
-    @FXML
-    private Button AllProducts;
-    @FXML
-    private Button Dress;
-    @FXML
-    private Button Jewllery;
-    @FXML
-    private Button Bags;
-    @FXML
-    private Button Shoes;
     @FXML
     private Button logout;
+    @FXML
+    private Button Home;
+    @FXML
+    private Button ProductsID;
+    @FXML
+    private Button CartID;
+    @FXML
+    private Button Contact;
+    @FXML
+    private Button LoginHOme;
 
-    /**
-     * Initializes the controller class.
-     */
+    private boolean isLoggedIn = false;
+    @FXML
+    private ImageView Logo;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        updateAuthButtons();
+    }
 
-    @FXML
-    private void HandleAllProducts(ActionEvent event) {
+    private void updateAuthButtons() {
+        if (LoginHOme != null && logout != null) {
+            LoginHOme.setVisible(!isLoggedIn);
+            logout.setVisible(isLoggedIn);
+        }
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.isLoggedIn = loggedIn;
+        updateAuthButtons();
     }
 
     @FXML
-    private void HandleDress(ActionEvent event) {
+    private void HandleHome(ActionEvent event) {
+        
     }
 
     @FXML
-    private void HandleJewllery(ActionEvent event) {
+    private void HandleProducts(ActionEvent event) {
+        
     }
 
     @FXML
-    private void HandleBags(ActionEvent event) {
+    private void HandleCart(ActionEvent event) {
+        
     }
 
     @FXML
-    private void HandleShoes(ActionEvent event) {
+    private void HandleContact(ActionEvent event) {
+        // Navigation logic to contact page
     }
 
     @FXML
-    private void HandleLogout(ActionEvent event) {
+    private void HandleLoginHome(ActionEvent event) {
+        
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("Login.fxml"));
+            javafx.scene.Parent root = loader.load();
+            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        
+        setLoggedIn(false);
+       
+    }
 }
