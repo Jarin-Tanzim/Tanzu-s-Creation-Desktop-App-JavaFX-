@@ -190,11 +190,11 @@
       </ScrollPane>
       <VBox layoutY="100.0" prefHeight="578.0" prefWidth="107.0" spacing="30.0" styleClass="sidebar" AnchorPane.bottomAnchor="-100.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Button fx:id="AllProducts" mnemonicParsing="false" onAction="#HandleAllProducts" prefHeight="25.0" prefWidth="63.0" styleClass="sidebar-button" text="All" />
-            <Button fx:id="Dress" mnemonicParsing="false" onAction="#HandleDress" prefHeight="33.0" prefWidth="64.0" styleClass="sidebar-button" text="Dress" />
-            <Button fx:id="Jewllery" mnemonicParsing="false" onAction="#HandleJewllery" prefHeight="45.0" prefWidth="85.0" styleClass="sidebar-button" text="Jewllery" />
-            <Button fx:id="Bags" mnemonicParsing="false" onAction="#HandleBags" prefHeight="25.0" prefWidth="65.0" styleClass="sidebar-button" stylesheets="@homepage.css" text="Bags" />
-            <Button fx:id="Shoes" mnemonicParsing="false" onAction="#HandleShoes" prefHeight="25.0" prefWidth="66.0" styleClass="sidebar-button" text="Shoes" />
+            <Button fx:id="Home" mnemonicParsing="false" onAction="#HandleHome" prefHeight="25.0" prefWidth="63.0" styleClass="sidebar-button" text="Home" />
+            <Button fx:id="ProductsID" mnemonicParsing="false" onAction="#HandleProducts" prefHeight="33.0" prefWidth="64.0" styleClass="sidebar-button" text="Products" wrapText="true" />
+            <Button fx:id="CartID" mnemonicParsing="false" onAction="#HandleCart" prefHeight="45.0" prefWidth="85.0" styleClass="sidebar-button" text="Cart" />
+            <Button fx:id="Contact" mnemonicParsing="false" onAction="#HandleContact" prefHeight="25.0" prefWidth="65.0" styleClass="sidebar-button" stylesheets="@homepage.css" text="Contact" />
+            <Button fx:id="LoginHOme" mnemonicParsing="false" onAction="#HandleLoginHome" prefHeight="25.0" prefWidth="66.0" styleClass="sidebar-button" text="Log in" />
          </children>
          <padding>
             <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
@@ -202,17 +202,17 @@
       </VBox>
       <AnchorPane prefHeight="101.0" prefWidth="957.0" styleClass="header" stylesheets="@homepage.css">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="80.0" layoutX="220.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Logo" fitHeight="100" fitWidth="100" layoutX="179.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/Official%20Logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="286.0" layoutY="26.0" text="Tanzu&quot;s Creation">
+            <Label layoutX="301.0" layoutY="41.0" text="Tanzu&quot;s Creation">
                <font>
                   <Font name="Arial Bold Italic" size="17.0" />
                </font>
             </Label>
-            <Button fx:id="logout" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="655.0" layoutY="23.0" mnemonicParsing="false" onAction="#HandleLogout" styleClass="logout-button" text="Log out" />
+            <Button fx:id="logout" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="655.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleLogout" styleClass="logout-button" text="Log out" />
          </children>
       </AnchorPane>
    </children>
