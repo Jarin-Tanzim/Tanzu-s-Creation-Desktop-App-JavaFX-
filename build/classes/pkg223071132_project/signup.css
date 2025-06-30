@@ -1,0 +1,56 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-image: url("images/bg.png")
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+}
+
+.label-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: #4e0f63;
+    -fx-font-weight: bold;
+}
+
+.text-field,
+.password-field {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 8 12;
+    -fx-font-size: 13px;
+}
+
+.radio-button {
+    -fx-font-size: 13px;
+    -fx-text-fill: #444;
+}
+
+.radio-button .radio {
+    -fx-background-color: #eee;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 100%;
+}
+
+.button {
+    -fx-background-color: linear-gradient(to right, #ec407a, #d81b60);
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0.3, 0, 2);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #d81b60, #ad1457);
+}
+
+#errorLabel {
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+}

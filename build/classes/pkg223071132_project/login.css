@@ -1,0 +1,52 @@
+
+
+.root {
+    -fx-background-image: url("images/bg.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+
+.image-view {
+    -fx-effect: dropshadow(gaussian, #888888, 10, 0.5, 0.0, 0.0);
+}
+
+
+.label-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: #d4008f;
+    -fx-font-weight: bold;
+}
+
+
+.text-field,
+.password-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #cccccc;
+    -fx-padding: 6 10;
+}
+
+
+.button {
+    -fx-background-color: linear-gradient(to right, #d4008f, #ff69b4);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 6 20;
+}
+
+
+.button:hover {
+    -fx-background-color: linear-gradient(to right, #ff69b4, #d4008f);
+}
+
+
+.error-label {
+    -fx-text-fill: #c70000;
+    -fx-font-style: italic;
+}
+.success-label {
+    -fx-text-fill: #2e7d32;
+}
