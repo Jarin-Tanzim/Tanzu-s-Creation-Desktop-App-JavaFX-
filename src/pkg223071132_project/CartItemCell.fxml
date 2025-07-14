@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="cartItemRoot" alignment="CENTER_LEFT" prefHeight="77.0" prefWidth="500.0" spacing="15" styleClass="cart" stylesheets="@cart.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Product Image -->
+    <ImageView fx:id="productImage" fitHeight="50" fitWidth="50" styleClass="cart-item" />
+
+    <!-- Product Name -->
+    <Label fx:id="productName" minWidth="120" styleClass="cart-item-name" />
+
+    <!-- Quantity Controls -->
+    <Label />
+    <Button fx:id="decreaseBtn" prefHeight="28.0" prefWidth="40.0" styleClass="quantity-button" stylesheets="@cart.css" text="-">
+    <font>
+        <Font name="System Bold" size="14.0" />
+    </font>
+</Button>
+
+    <Label fx:id="productQuantity" alignment="CENTER" minWidth="20" />
+    <Button fx:id="increaseBtn" prefHeight="28.0" prefWidth="40.0" styleClass="quantity-button" stylesheets="@cart.css" text="+">
+    <font>
+        <Font name="System Bold" size="14.0" />
+    </font>
+</Button>
+    <Label fx:id="productPrice" minWidth="60" styleClass="summary-value" />
+
+    
+    <Region HBox.hgrow="ALWAYS" />
+
+    
+    <Button fx:id="removeButton" prefHeight="38.0" prefWidth="31.0" styleClass="remove-button" text="X">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Button>
+</HBox>
