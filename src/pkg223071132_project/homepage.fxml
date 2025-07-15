@@ -207,7 +207,7 @@
                   <Image url="@../image/Official%20Logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="301.0" layoutY="41.0" text="Tanzu&quot;s Creation">
+           <Label layoutX="301.0" layoutY="41.0" text="Tanzu's Creation">
                <font>
                   <Font name="Arial Bold Italic" size="17.0" />
                </font>
