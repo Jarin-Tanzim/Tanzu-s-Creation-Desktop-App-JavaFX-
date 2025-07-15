@@ -47,58 +47,67 @@ public class CartItemCellController implements Initializable {
     }
 
     public void setData(Product product, ListView<Product> parentListView, Runnable updateTotalsCallback) {
-    this.product = product;
-    this.parentListView = parentListView;
-    this.updateTotalsCallback = updateTotalsCallback;
+        this.product = product;
+        this.parentListView = parentListView;
+        this.updateTotalsCallback = updateTotalsCallback;
 
-    // Initialize quantity from product if stored, else default to 1
-    this.quantity = product.getQuantity() > 0 ? product.getQuantity() : 1;
+        
+        this.quantity = product.getQuantity() > 0 ? product.getQuantity() : 1;
 
-    productName.setText(product.getName());
-    productQuantity.setText(String.valueOf(quantity));
-    updatePriceLabel();
-
-    // Load image from resources folder correctly
-       String imageFileName = product.getImagePath(); // e.g. "Braclet 1.jpg"
-String resourcePath = "/pkg223071132_project/images/" + imageFileName.replace(" ", "%20");
-
-InputStream imageStream = getClass().getResourceAsStream(resourcePath);
-
-if (imageStream == null) {
-    System.err.println("Image not found: " + resourcePath);
-    productImage.setImage(null);
-} else {
-    productImage.setImage(new Image(imageStream));
-}
-    increaseBtn.setOnAction(e -> {
-        quantity++;
-        product.setQuantity(quantity);
+        productName.setText(product.getName());
         productQuantity.setText(String.valueOf(quantity));
         updatePriceLabel();
-        if (updateTotalsCallback != null) updateTotalsCallback.run();
-    });
 
-    decreaseBtn.setOnAction(e -> {
-        if (quantity > 1) {
-            quantity--;
+       
+        String imagePath = product.getImagePath(); 
+
+        Image image = null;
+        if (imagePath == null || imagePath.isEmpty()) {
+            System.err.println("Image path not set for product: " + product.getName());
+        } else if (imagePath.startsWith("file:/") || imagePath.matches("^[A-Za-z]:\\\\.*")) {
+            
+            String uri = imagePath.startsWith("file:/") ? imagePath : "file:/" + imagePath.replace("\\", "/");
+            image = new Image(uri, true);
+        } else {
+            // Assume it's a resource bundled inside the JAR/build
+            String resourcePath = "/pkg223071132_project/images/" + imagePath.replace(" ", "%20");
+            InputStream imageStream = getClass().getResourceAsStream(resourcePath);
+            if (imageStream == null) {
+                System.err.println("Image not found: " + resourcePath);
+            } else {
+                image = new Image(imageStream);
+            }
+        }
+        productImage.setImage(image);
+
+        // Button handlers
+        increaseBtn.setOnAction(e -> {
+            quantity++;
             product.setQuantity(quantity);
             productQuantity.setText(String.valueOf(quantity));
             updatePriceLabel();
             if (updateTotalsCallback != null) updateTotalsCallback.run();
-        }
-    });
+        });
 
-    removeButton.setOnAction(e -> {
-        Cart.removeItem(product);
-        parentListView.getItems().remove(product);
-        if (updateTotalsCallback != null) updateTotalsCallback.run();
-    });
-}
+        decreaseBtn.setOnAction(e -> {
+            if (quantity > 1) {
+                quantity--;
+                product.setQuantity(quantity);
+                productQuantity.setText(String.valueOf(quantity));
+                updatePriceLabel();
+                if (updateTotalsCallback != null) updateTotalsCallback.run();
+            }
+        });
 
-private void updatePriceLabel() {
-    double totalPrice = product.getPrice() * quantity;
-    productPrice.setText(String.format("%.2f BDT", totalPrice));
-}
+        removeButton.setOnAction(e -> {
+            Cart.removeItem(product);
+            parentListView.getItems().remove(product);
+            if (updateTotalsCallback != null) updateTotalsCallback.run();
+        });
+    }
 
-
+    private void updatePriceLabel() {
+        double totalPrice = product.getPrice() * quantity;
+        productPrice.setText(String.format("%.2f BDT", totalPrice));
+    }
 }
