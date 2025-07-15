@@ -28,7 +28,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Braclet" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -40,7 +40,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Earring" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -52,7 +52,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Earring" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -64,7 +64,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Earring" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button fx:id="handleAddToCart" mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -76,7 +76,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Dress" />
                         <Label styleClass="product-price" text="980 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="130.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -88,7 +88,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Braclet" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                       <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="240.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -100,7 +100,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Earring" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="350.0" layoutY="20.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card" stylesheets="@homepage.css">
@@ -116,7 +116,7 @@
                               <String fx:value="product-name" />
                               <String fx:value="product-price" />
                            </styleClass></Label>
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="166.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -132,7 +132,7 @@
                               <String fx:value="product-name" />
                               <String fx:value="product-price" />
                            </styleClass></Label>
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="130.0" layoutY="166.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -144,7 +144,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Earring" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="240.0" layoutY="166.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -160,7 +160,7 @@
                               <String fx:value="product-name" />
                               <String fx:value="product-price" />
                            </styleClass></Label>
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                   <VBox alignment="TOP_CENTER" layoutX="350.0" layoutY="166.0" prefHeight="136.0" prefWidth="100.0" styleClass="product-card">
@@ -172,7 +172,7 @@
                         </ImageView>
                         <Label styleClass="product-name" text="Braclet" />
                         <Label styleClass="product-price" text="350 BDT" />
-                        <Button mnemonicParsing="false" styleClass="add-to-cart-button" text="Add to Cart" />
+                        <Button mnemonicParsing="false" onAction="#handleAddToCart" styleClass="add-to-cart-button" text="Add to Cart" />
                      </children>
                   </VBox>
                </children>
