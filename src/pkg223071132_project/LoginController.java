@@ -27,68 +27,59 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void handlelogin(ActionEvent event) {
-        String email = usernamefield.getText().trim();
-        String password = passwordfield.getText().trim();
+private void handlelogin(ActionEvent event) {
+    String email = usernamefield.getText().trim();
+    String password = passwordfield.getText().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            errorlabel.setText("Please enter both email and password.");
-            return;
-        }
+    if (email.isEmpty() || password.isEmpty()) {
+        errorlabel.setText("Please enter both email and password.");
+        return;
+    }
 
-        try {
-            Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/tanzu_app", "root", "1234"
-            );
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tanzu_app", "root", "1234");
+         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?")) {
 
-            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, email);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
+        stmt.setString(1, email);
+        stmt.setString(2, password);
 
+        try (ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 String fullName = rs.getString("full_name");
                 String role = rs.getString("role");
 
+                // Mark user as logged in globally
+                UserSession.login();
+
+                FXMLLoader loader;
                 if (role.equalsIgnoreCase("admin")) {
-                    
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_panel.fxml"));
-                    Parent root = loader.load();
-
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Admin Dashboard");
-                    stage.show();
+                    loader = new FXMLLoader(getClass().getResource("admin_panel.fxml"));
                 } else {
-                    
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
-                    Parent root = loader.load();
-
-                    HomepageController homepageController = loader.getController();
-                    homepageController.setLoggedIn(true); 
-
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.setTitle("Welcome, " + fullName);
-                    stage.show();
+                    loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
                 }
 
-                
-                ((Stage) loginButton.getScene().getWindow()).close();
+                Parent root = loader.load();
+
+                // If homepage, update controller's loggedIn state for UI update
+                if (!role.equalsIgnoreCase("admin")) {
+                    HomepageController homepageController = loader.getController();
+                    homepageController.setLoggedIn(true);
+                }
+
+                // Replace current window scene instead of opening a new window
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle(role.equalsIgnoreCase("admin") ? "Admin Dashboard" : "Welcome, " + fullName);
+                stage.show();
+
             } else {
                 errorlabel.setText("Invalid credentials.");
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (Exception e) {
-            errorlabel.setText("Error: " + e.getMessage());
-            e.printStackTrace();
         }
+    } catch (Exception e) {
+        errorlabel.setText("Error: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
     @FXML
     private void handleGoTosign(ActionEvent event) {
