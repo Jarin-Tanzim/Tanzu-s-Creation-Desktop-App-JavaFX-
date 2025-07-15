@@ -69,7 +69,7 @@ public class CartItemCellController implements Initializable {
             String uri = imagePath.startsWith("file:/") ? imagePath : "file:/" + imagePath.replace("\\", "/");
             image = new Image(uri, true);
         } else {
-            // Assume it's a resource bundled inside the JAR/build
+           
             String resourcePath = "/pkg223071132_project/images/" + imagePath.replace(" ", "%20");
             InputStream imageStream = getClass().getResourceAsStream(resourcePath);
             if (imageStream == null) {
