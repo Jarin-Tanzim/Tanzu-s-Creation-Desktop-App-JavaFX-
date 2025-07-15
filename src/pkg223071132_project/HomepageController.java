@@ -1,25 +1,19 @@
 package pkg223071132_project;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import pkg223071132_project.CartController;
-import pkg223071132_project.CartItem;
 
 public class HomepageController implements Initializable {
+
     @FXML
     private Button logout;
     @FXML
@@ -32,12 +26,8 @@ public class HomepageController implements Initializable {
     private Button Contact;
     @FXML
     private Button LoginHOme;
-
-    private boolean isLoggedIn = false;
     @FXML
     private ImageView Logo;
-    @FXML
-    private Button AddtoCart;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,110 +36,117 @@ public class HomepageController implements Initializable {
 
     private void updateAuthButtons() {
         if (LoginHOme != null && logout != null) {
+            boolean isLoggedIn = UserSession.isLoggedIn();
             LoginHOme.setVisible(!isLoggedIn);
             logout.setVisible(isLoggedIn);
         }
     }
 
     public void setLoggedIn(boolean loggedIn) {
-        this.isLoggedIn = loggedIn;
+        if (loggedIn) {
+            UserSession.login();
+        } else {
+            UserSession.logout();
+        }
         updateAuthButtons();
     }
 
     @FXML
     private void HandleHome(ActionEvent event) {
-        
+        // TODO: Add navigation if needed
     }
 
     @FXML
     private void HandleProducts(ActionEvent event) {
-        
+        // TODO: Add navigation if needed
     }
 
     @FXML
     private void HandleCart(ActionEvent event) {
-        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("cart.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) CartID.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Your Shopping Cart");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load cart page.");
+        }
     }
 
     @FXML
     private void HandleContact(ActionEvent event) {
-        // Navigation logic to contact page
+        // TODO: Add contact page navigation if needed
     }
 
     @FXML
-    private void HandleLoginHome(ActionEvent event) {
-        
+    public void HandleLoginHome(ActionEvent event) {
         try {
-            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("Login.fxml"));
-            javafx.scene.Parent root = loader.load();
-            javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-            javafx.scene.Scene scene = new javafx.scene.Scene(root);
-            stage.setScene(scene);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Error", "Unable to load Login page.");
         }
     }
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        
         setLoggedIn(false);
-       
+        showAlert("Logged Out", "You have been successfully logged out.");
     }
 
     @FXML
-private void HandleAddtoCart(ActionEvent event) {
-    if (!isLoggedIn) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Login Required");
-    alert.setHeaderText(null);
-    alert.setContentText("Please log in to add items to your cart.");
-    alert.showAndWait();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void handleAddToCart(ActionEvent event) {
+        if (!UserSession.isLoggedIn()) {
+            showAlert("Login Required", "Please log in to add items to the cart.");
+            return;
         }
-        return; // Stop further execution
-    }
 
-    
-    try {
-        Node clickedButton = (Node) event.getSource();
+        Button clickedButton = (Button) event.getSource();
         VBox productCard = (VBox) clickedButton.getParent();
 
-        Label nameLabel = (Label) productCard.getChildren().get(1);
-        Label priceLabel = (Label) productCard.getChildren().get(2);
-        ImageView imageView = (ImageView) productCard.getChildren().get(0);
+        String name = "";
+        double price = 0.0;
+        String imagePath = "";
 
-        String name = nameLabel.getText();
-        String priceText = priceLabel.getText().replace("BDT", "").trim();
-        double price = Double.parseDouble(priceText);
-        String imageUrl = imageView.getImage().getUrl();
+        for (javafx.scene.Node node : productCard.getChildren()) {
+            if (node instanceof Label label) {
+                String text = label.getText();
+                if (text.matches(".*\\d+\\s*BDT.*")) {
+                    price = parsePrice(text);
+                } else {
+                    name = text;
+                }
+            } else if (node instanceof ImageView iv) {
+                if (iv.getImage() != null && iv.getImage().getUrl() != null) {
+                    imagePath = iv.getImage().getUrl();
+                }
+            }
+        }
 
-        CartItem newItem = new CartItem(name, 1, price, imageUrl);
+        Cart.addItem(new Product(name, price, imagePath));
+        showAlert("Success", name + " added to cart!");
+    }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("cart.fxml"));
-        Parent root = loader.load();
+    private double parsePrice(String text) {
+        try {
+            return Double.parseDouble(text.replaceAll("[^\\d.]", ""));
+        } catch (Exception e) {
+            return 0.0;
+        }
+    }
 
-        CartController cartController = loader.getController();
-        cartController.addToCart(newItem);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-
-    } catch (Exception e) {
-        e.printStackTrace();
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
-
-
-   }
-
