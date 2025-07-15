@@ -1,0 +1,84 @@
+
+.anchor-pane {
+    -fx-background-color: #ffd6e0; /* Light pink */
+}
+
+
+.title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50; /* Optional: dark gray/blue text */
+}
+
+
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+}
+
+
+.cart-summary-box {
+    -fx-spacing: 20px;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+
+.cart-summary-box .label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+
+#checkoutButton {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6px;
+    -fx-cursor: hand;
+}
+
+#checkoutButton:hover {
+    -fx-background-color: #219150;
+}
+.cart-item {
+    -fx-padding: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1 0 1 0; /* horizontal lines only */
+    -fx-background-color: #ffffff;
+}
+
+.cart-item-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.quantity-button {
+    -fx-background-color: #ddd;
+    -fx-font-weight: bold;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+}
+.remove-button {
+    -fx-font-size: 16px;
+    -fx-text-fill: red;
+    -fx-background-color: transparent;
+}
+.list-cell:selected {
+    -fx-background-color: #d0eaff;
+    -fx-text-fill: black;
+}
+.summary-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+
+.summary-value {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #27ae60; 
+}
