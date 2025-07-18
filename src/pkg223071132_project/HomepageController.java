@@ -42,9 +42,10 @@ public class HomepageController implements Initializable {
         }
     }
 
-    public void setLoggedIn(boolean loggedIn) {
+    
+    public void setLoggedIn(boolean loggedIn, int userId, String role) {
         if (loggedIn) {
-            UserSession.login();
+            UserSession.login(userId, role);  
         } else {
             UserSession.logout();
         }
@@ -97,7 +98,7 @@ public class HomepageController implements Initializable {
 
     @FXML
     private void handleLogout(ActionEvent event) {
-        setLoggedIn(false);
+        setLoggedIn(false, -1, "");  // Pass empty string for role on logout
         showAlert("Logged Out", "You have been successfully logged out.");
     }
 
