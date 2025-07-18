@@ -23,9 +23,18 @@ public class SignupController implements Initializable {
     @FXML private Button SignupButton;
     @FXML private Label ErrorLable;
 
+    
+    @FXML private ComboBox<String> SecurityQuestionBox;
+    @FXML private TextField SecurityAnswerField;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+        SecurityQuestionBox.getItems().addAll(
+            "What is your mother's maiden name?",
+            "What was the name of your first pet?",
+            "What is your favorite food?",
+            "What city were you born in?"
+        );
     }
 
     @FXML
@@ -35,9 +44,11 @@ public class SignupController implements Initializable {
         String password = PasswordField.getText().trim();
         String confirmPassword = ConfrimPassField.getText().trim();
         String gender = GenderMale.isSelected() ? "Male" : GenderFemale.isSelected() ? "Female" : "";
+        String question = SecurityQuestionBox.getValue();
+        String answer = SecurityAnswerField.getText().trim();
 
-       
-        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || gender.isEmpty()) {
+        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
+                || gender.isEmpty() || question == null || answer.isEmpty()) {
             ErrorLable.setText("Please fill in all fields.");
             return;
         }
@@ -52,34 +63,34 @@ public class SignupController implements Initializable {
                 "jdbc:mysql://localhost:3306/tanzu_app", "root", "1234"
             );
 
-           String checkSql = "SELECT id FROM users WHERE email = ?";
-           PreparedStatement checkStmt = conn.prepareStatement(checkSql);
-           checkStmt.setString(1, email);
-           ResultSet checkResult = checkStmt.executeQuery();
-           if (checkResult.next()) {
-            ErrorLable.setText("Email already registered.");
+            String checkSql = "SELECT id FROM users WHERE email = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, email);
+            ResultSet checkResult = checkStmt.executeQuery();
+            if (checkResult.next()) {
+                ErrorLable.setText("Email already registered.");
+                checkResult.close();
+                checkStmt.close();
+                conn.close();
+                return;
+            }
             checkResult.close();
             checkStmt.close();
-            conn.close();
-            return;
-}
-checkResult.close();
-checkStmt.close();
 
-            
-            String sql = "INSERT INTO users (full_name, email, password, gender, role) VALUES (?, ?, ?, ?, 'customer')";
+            String sql = "INSERT INTO users (full_name, email, password, gender, role, security_question, security_answer) VALUES (?, ?, ?, ?, 'customer', ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, fullName);
             stmt.setString(2, email);
-            stmt.setString(3, password);  
+            stmt.setString(3, password);
             stmt.setString(4, gender);
+            stmt.setString(5, question);
+            stmt.setString(6, answer);
 
             int result = stmt.executeUpdate();
             if (result > 0) {
                 ErrorLable.setText("Registration successful!");
                 clearFields();
 
-                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
@@ -108,5 +119,7 @@ checkStmt.close();
         ConfrimPassField.clear();
         GenderMale.setSelected(false);
         GenderFemale.setSelected(false);
+        SecurityQuestionBox.getSelectionModel().clearSelection();
+        SecurityAnswerField.clear();
     }
 }
