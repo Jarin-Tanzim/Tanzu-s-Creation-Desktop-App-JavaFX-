@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500" prefWidth="700" styleClass="anchor-pane" stylesheets="@checkout.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="pkg223071132_project.CheckoutController">
+
+    <VBox alignment="TOP_CENTER" spacing="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+
+        <Label styleClass="title-label" text="🛒 Checkout" />
+
+        <HBox alignment="TOP_CENTER" spacing="30">
+
+            <!-- Left: Customer Info -->
+            <VBox prefWidth="330" spacing="15" styleClass="checkout-card">
+                <Label styleClass="section-title" text="Shipping Info" />
+                <Label fx:id="nameLabel" text="Customer Name" />
+                <TextField fx:id="addressField" promptText="Enter your address" />
+                <TextField fx:id="phoneField" promptText="Phone number" />
+            </VBox>
+
+            <!-- Right: Order Summary -->
+            <VBox prefWidth="330" spacing="15" styleClass="checkout-card">
+                <Label styleClass="section-title" text="Order Summary" />
+                <HBox spacing="10">
+                    <Label styleClass="summary-label" text="Total:" />
+                    <Label fx:id="totalPriceLabel" styleClass="summary-value" />
+                </HBox>
+
+                <Label text="Payment Method" />
+                <ComboBox fx:id="paymentMethodCombo" promptText="Select Payment Method" />
+
+                <Button fx:id="checkoutConfirmButton" onAction="#handleConfirmOrder" styleClass="checkout-button" text="Confirm Order" />
+            </VBox>
+
+        </HBox>
+    </VBox>
+</AnchorPane>
