@@ -3,35 +3,27 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="350.0" prefWidth="600.0" styleClass="root" stylesheets="@admin_panel.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg223071132_project.Admin_panelController">
-   <children>
-      <AnchorPane layoutY="5.0" prefHeight="60.0" prefWidth="600.0" styleClass="header-bar" stylesheets="@admin_panel.css">
-         <children>
-            <Label layoutX="20.0" layoutY="18.0" styleClass="label-title" stylesheets="@admin_panel.css" text="Admin Dashboard">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="adminLogout" layoutX="513.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleAdminLogout" stylesheets="@admin_panel.css" text="Log out">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <Label layoutX="209.0" layoutY="104.0" styleClass="label-welcome" text="Welcome,Admin!">
-         <font>
-            <Font name="System Bold" size="22.0" />
-         </font>
-      </Label>
-      <Button fx:id="ViewUserButton" layoutX="69.0" layoutY="188.0" mnemonicParsing="false" onAction="#HandleUsers" text="View Users" />
-      <Button fx:id="AddProductsButton" layoutX="243.0" layoutY="188.0" mnemonicParsing="false" onAction="#HandleAddProducts" text="Add Products" />
-      <Button fx:id="ViewCardButton" layoutX="442.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleViewCart" text="View Customer Cart" />
-      <Label fx:id="footer" layoutX="212.0" layoutY="291.0" stylesheets="@admin_panel.css" text="© 2025 Tanzu's Creation · Admin Panel">
-         <font>
-            <Font size="13.0" />
-         </font></Label>
-   </children>
+<AnchorPane prefHeight="400" prefWidth="700" styleClass="root" stylesheets="@admin_panel.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg223071132_project.Admin_panelController">
+
+    
+    <AnchorPane layoutY="0" prefHeight="70" prefWidth="700" styleClass="header-bar">
+        <Label layoutX="25" layoutY="20" styleClass="title-label" text="Admin Dashboard" />
+        <Button fx:id="adminLogout" layoutX="600" layoutY="15" onAction="#handleAdminLogout" styleClass="logout-button" text="Log Out" />
+    </AnchorPane>
+
+    
+    <Label layoutX="250" layoutY="100" styleClass="welcome-label" text="Welcome, Admin!" />
+
+    
+    <VBox layoutX="192.0" layoutY="165.0" spacing="20">
+        <Button fx:id="ViewUserButton" onAction="#HandleUsers" styleClass="action-button" text="👥 View Users" />
+        <Button fx:id="AddProductsButton" onAction="#HandleAddProducts" styleClass="action-button" text="➕ Add Products" />
+        <Button fx:id="ViewCardButton" onAction="#handleViewCart" styleClass="action-button" text="🧾 View Orders" />
+    </VBox>
+
+   
+    <Label layoutX="230" layoutY="360" styleClass="footer-label" text="© 2025 Tanzu's Creation · Admin Panel" />
+
 </AnchorPane>
