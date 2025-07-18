@@ -95,12 +95,34 @@ public class CartController implements Initializable {
     }
 
     @FXML
-    private void HandleCheckout(ActionEvent event) {
-        // Implement checkout logic or confirmation
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Checkout");
+private void HandleCheckout(ActionEvent event) {
+    if (!UserSession.isLoggedIn()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Not Logged In");
         alert.setHeaderText(null);
-        alert.setContentText("Checkout process coming soon!");
+        alert.setContentText("You must be logged in to proceed to checkout.");
+        alert.showAndWait();
+        return;
+    }
+
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("checkout.fxml"));
+        Parent root = loader.load();
+
+        
+        Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        currentStage.setTitle("Checkout");
+        currentStage.setScene(new Scene(root));
+        currentStage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Failed to load checkout page.");
         alert.showAndWait();
     }
+}
+
 }
