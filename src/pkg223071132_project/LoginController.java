@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -22,6 +23,8 @@ public class LoginController implements Initializable {
     @FXML private Hyperlink GoTosignup;
     @FXML
     private Hyperlink forgotPasswordLink;
+    @FXML
+    private Hyperlink backtohome;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,7 +54,7 @@ public class LoginController implements Initializable {
 
                     int userId = rs.getInt("id");  
 
-                    // Mark user as logged in globally with role
+                   
                     UserSession.login(userId, role);
 
                     FXMLLoader loader;
@@ -69,7 +72,7 @@ public class LoginController implements Initializable {
                         homepageController.setLoggedIn(true, userId, role);  
                     }
 
-                    // Replace current window scene instead of opening a new window
+                    
                     Stage stage = (Stage) loginButton.getScene().getWindow();
                     stage.setScene(new Scene(root));
                     stage.setTitle(role.equalsIgnoreCase("admin") ? "Admin Dashboard" : "Welcome, " + fullName);
@@ -120,4 +123,24 @@ private void handleForgotPassword(ActionEvent event) {
         e.printStackTrace();
     }
 }
+
+    @FXML
+    private void handlebacktohome(ActionEvent event) {
+        
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow(); // <-- Node works for Button or Hyperlink!
+        stage.setScene(new Scene(root));
+        stage.setTitle("Home");
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Unable to load Home page.");
+        alert.showAndWait();
+    }
+    }
 }
