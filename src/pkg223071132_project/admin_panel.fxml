@@ -20,7 +20,7 @@
     <VBox layoutX="192.0" layoutY="165.0" spacing="20">
         <Button fx:id="ViewUserButton" onAction="#HandleUsers" styleClass="action-button" text="👥 View Users" />
         <Button fx:id="AddProductsButton" onAction="#HandleAddProducts" styleClass="action-button" text="➕ Add Products" />
-        <Button fx:id="ViewCardButton" onAction="#handleViewCart" styleClass="action-button" text="🧾 View Orders" />
+        <Button fx:id="ViewCardButton" onAction="#handleVieworders" styleClass="action-button" text="🧾 View Orders" />
     </VBox>
 
    
