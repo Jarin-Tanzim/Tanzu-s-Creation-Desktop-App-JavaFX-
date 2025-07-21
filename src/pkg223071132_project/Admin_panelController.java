@@ -91,11 +91,36 @@ private void handleAdminLogout(ActionEvent event) {
     }
 
     @FXML
-    private void HandleAddProducts(ActionEvent event) {
+private void HandleAddProducts(ActionEvent event) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("add_product.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("Add New Product");
+        stage.setScene(new Scene(root));
+        stage.show();
+
+        
+
+    } catch (IOException e) {
+        e.printStackTrace();
     }
+}
 
     @FXML
-    private void handleViewCart(ActionEvent event) {
+    private void handleVieworders(ActionEvent event) {
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view_orders.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle("View Orders");
+        stage.setScene(new Scene(root));
+        stage.show();
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
     
 }
