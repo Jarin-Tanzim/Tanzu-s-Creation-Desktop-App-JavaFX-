@@ -15,7 +15,7 @@ public class Cart {
     }
 
     public static List<Product> getItems() {
-        return new ArrayList<>(items); // Return a copy to avoid direct modification
+        return new ArrayList<>(items); 
     }
 
     public static int getTotalItems() {
