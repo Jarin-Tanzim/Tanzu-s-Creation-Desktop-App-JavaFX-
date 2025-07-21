@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -26,6 +27,8 @@ public class SignupController implements Initializable {
     
     @FXML private ComboBox<String> SecurityQuestionBox;
     @FXML private TextField SecurityAnswerField;
+    @FXML
+    private Hyperlink BacktoLogin;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -88,20 +91,28 @@ public class SignupController implements Initializable {
 
             int result = stmt.executeUpdate();
             if (result > 0) {
-                ErrorLable.setText("Registration successful!");
-                clearFields();
+            clearFields();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-                Parent root = loader.load();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(root));
-                stage.setTitle("Login");
-                stage.show();
+  
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Signup Successful");
+    alert.setHeaderText(null);
+    alert.setContentText("You have signed up successfully!");
+    alert.showAndWait();
 
-                ((Stage) SignupButton.getScene().getWindow()).close();
-            } else {
-                ErrorLable.setText("Registration failed.");
-            }
+    
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+    Parent root = loader.load();
+    Stage stage = new Stage();
+    stage.setScene(new Scene(root));
+    stage.setTitle("Login");
+    stage.show();
+
+   
+    ((Stage) SignupButton.getScene().getWindow()).close();
+} else {
+    ErrorLable.setText("Registration failed.");
+}
 
             stmt.close();
             conn.close();
@@ -121,5 +132,21 @@ public class SignupController implements Initializable {
         GenderFemale.setSelected(false);
         SecurityQuestionBox.getSelectionModel().clearSelection();
         SecurityAnswerField.clear();
+    }
+
+    @FXML
+    private void handleBacktologin(ActionEvent event) {
+         try {
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Scene scene = new Scene(root);
+
+        
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace(); 
+    }
     }
 }
