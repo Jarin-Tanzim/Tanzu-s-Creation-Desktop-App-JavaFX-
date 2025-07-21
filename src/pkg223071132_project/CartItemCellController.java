@@ -47,64 +47,56 @@ public class CartItemCellController implements Initializable {
     }
 
     public void setData(Product product, ListView<Product> parentListView, Runnable updateTotalsCallback) {
-        this.product = product;
-        this.parentListView = parentListView;
-        this.updateTotalsCallback = updateTotalsCallback;
+    this.product = product;
+    this.parentListView = parentListView;
+    this.updateTotalsCallback = updateTotalsCallback;
 
+    this.quantity = Math.max(product.getQuantity(), 1);
+
+    productName.setText(product.getName());
+    productQuantity.setText(String.valueOf(quantity));
+    updatePriceLabel();
+
+    try {
+        String imagePath = product.getFullImagePath(); 
+        InputStream imageStream = getClass().getResourceAsStream(imagePath);
         
-        this.quantity = product.getQuantity() > 0 ? product.getQuantity() : 1;
+        if (imageStream == null) {
+            System.err.println("Image not found: " + imagePath);
+        } else {
+            Image image = new Image(imageStream);
+            productImage.setImage(image);
+        }
+    } catch (Exception e) {
+        System.err.println("Failed to load image for: " + product.getName());
+        e.printStackTrace();
+    }
 
-        productName.setText(product.getName());
+    increaseBtn.setOnAction(e -> {
+        quantity++;
+        product.setQuantity(quantity);
         productQuantity.setText(String.valueOf(quantity));
         updatePriceLabel();
+        if (updateTotalsCallback != null) updateTotalsCallback.run();
+    });
 
-       
-        String imagePath = product.getImagePath(); 
-
-        Image image = null;
-        if (imagePath == null || imagePath.isEmpty()) {
-            System.err.println("Image path not set for product: " + product.getName());
-        } else if (imagePath.startsWith("file:/") || imagePath.matches("^[A-Za-z]:\\\\.*")) {
-            
-            String uri = imagePath.startsWith("file:/") ? imagePath : "file:/" + imagePath.replace("\\", "/");
-            image = new Image(uri, true);
-        } else {
-           
-            String resourcePath = "/pkg223071132_project/images/" + imagePath.replace(" ", "%20");
-            InputStream imageStream = getClass().getResourceAsStream(resourcePath);
-            if (imageStream == null) {
-                System.err.println("Image not found: " + resourcePath);
-            } else {
-                image = new Image(imageStream);
-            }
-        }
-        productImage.setImage(image);
-
-        // Button handlers
-        increaseBtn.setOnAction(e -> {
-            quantity++;
+    decreaseBtn.setOnAction(e -> {
+        if (quantity > 1) {
+            quantity--;
             product.setQuantity(quantity);
             productQuantity.setText(String.valueOf(quantity));
             updatePriceLabel();
             if (updateTotalsCallback != null) updateTotalsCallback.run();
-        });
+        }
+    });
 
-        decreaseBtn.setOnAction(e -> {
-            if (quantity > 1) {
-                quantity--;
-                product.setQuantity(quantity);
-                productQuantity.setText(String.valueOf(quantity));
-                updatePriceLabel();
-                if (updateTotalsCallback != null) updateTotalsCallback.run();
-            }
-        });
+    removeButton.setOnAction(e -> {
+        Cart.removeItem(product);
+        parentListView.getItems().remove(product);
+        if (updateTotalsCallback != null) updateTotalsCallback.run();
+    });
+}
 
-        removeButton.setOnAction(e -> {
-            Cart.removeItem(product);
-            parentListView.getItems().remove(product);
-            if (updateTotalsCallback != null) updateTotalsCallback.run();
-        });
-    }
 
     private void updatePriceLabel() {
         double totalPrice = product.getPrice() * quantity;
