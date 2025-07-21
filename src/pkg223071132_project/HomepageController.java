@@ -5,16 +5,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HomepageController implements Initializable {
 
-    @FXML
     private Button logout;
     @FXML
     private Button Home;
@@ -23,11 +24,13 @@ public class HomepageController implements Initializable {
     @FXML
     private Button CartID;
     @FXML
-    private Button Contact;
-    @FXML
     private Button LoginHOme;
     @FXML
     private ImageView Logo;
+    @FXML
+    private Region spacer;
+    @FXML
+    private Button Myorders;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,12 +38,17 @@ public class HomepageController implements Initializable {
     }
 
     private void updateAuthButtons() {
-        if (LoginHOme != null && logout != null) {
-            boolean isLoggedIn = UserSession.isLoggedIn();
-            LoginHOme.setVisible(!isLoggedIn);
-            logout.setVisible(isLoggedIn);
+    if (LoginHOme != null) {
+        boolean isLoggedIn = UserSession.isLoggedIn();
+        if (isLoggedIn) {
+            LoginHOme.setText("Logout");
+            LoginHOme.setOnAction(this::handleLogout);
+        } else {
+            LoginHOme.setText("Login");
+            LoginHOme.setOnAction(this::HandleLoginHome);
         }
     }
+}
 
     
     public void setLoggedIn(boolean loggedIn, int userId, String role) {
@@ -59,7 +67,17 @@ public class HomepageController implements Initializable {
 
     @FXML
     private void HandleProducts(ActionEvent event) {
-        // TODO: Add navigation if needed
+        try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("product.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ProductsID.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Products");
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        showAlert("Error", "Failed to load products page.");
+    }
     }
 
     @FXML
@@ -77,10 +95,6 @@ public class HomepageController implements Initializable {
         }
     }
 
-    @FXML
-    private void HandleContact(ActionEvent event) {
-        // TODO: Add contact page navigation if needed
-    }
 
     @FXML
     public void HandleLoginHome(ActionEvent event) {
@@ -96,11 +110,11 @@ public class HomepageController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleLogout(ActionEvent event) {
-        setLoggedIn(false, -1, "");  // Pass empty string for role on logout
-        showAlert("Logged Out", "You have been successfully logged out.");
-    }
+public void handleLogout(ActionEvent event) {
+    setLoggedIn(false, -1, "");  // Clear session
+    showAlert("Logged Out", "You have been successfully logged out.");
+}
+
 
     @FXML
     private void handleAddToCart(ActionEvent event) {
@@ -125,10 +139,12 @@ public class HomepageController implements Initializable {
                     name = text;
                 }
             } else if (node instanceof ImageView iv) {
-                if (iv.getImage() != null && iv.getImage().getUrl() != null) {
-                    imagePath = iv.getImage().getUrl();
-                }
-            }
+    if (iv.getImage() != null && iv.getImage().getUrl() != null) {
+        String url = iv.getImage().getUrl();
+       
+        imagePath = url.substring(url.lastIndexOf('/') + 1);
+    }
+}
         }
 
         Cart.addItem(new Product(name, price, imagePath));
@@ -150,4 +166,33 @@ public class HomepageController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+private void Handlemyorders(ActionEvent event) {
+    if (!UserSession.isLoggedIn()) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Not Logged In");
+        alert.setHeaderText(null);
+        alert.setContentText("Please log in to view your orders.");
+        alert.showAndWait();
+        return;
+    }
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("my_order.fxml")); // or "my_order.fxml" if that's your filename
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("My Orders");
+        stage.show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Could not load the orders page.");
+        alert.showAndWait();
+    }
+}
+
 }
