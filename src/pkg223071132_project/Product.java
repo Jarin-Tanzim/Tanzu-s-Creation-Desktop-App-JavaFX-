@@ -1,45 +1,39 @@
 package pkg223071132_project;
 
 public class Product {
-
+    private int id;
     private String name;
     private double price;
-    private String imagePath;
+    private String description;
+    private String imageFileName;
     private int quantity;
 
-    public Product(String name, double price, String imagePath) {
-        this.name = name;
-        this.price = price;
-        this.imagePath = imagePath;
-        this.quantity = 1; // default quantity
-    }
+    
+    public Product(String name, double price, String imageFileName) {
+    this.name = name;
+    this.price = price;
+    this.imageFileName = imageFileName;
+    this.quantity = 1;
+}
 
-    // Getter for name
-    public String getName() {
-        return name;
-    }
-
-    // Getter for price
-    public double getPrice() {
-        return price;
-    }
-
-    // Getter for imagePath
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    // Getter and setter for quantity
-    public int getQuantity() {
-        return quantity;
-    }
+    
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public double getPrice() { return price; }
+    public String getDescription() { return description; }
+    public String getImageFileName() { return imageFileName; }
+    public int getQuantity() { return quantity; }
 
     public void setQuantity(int quantity) {
-        if (quantity < 1) quantity = 1; // minimum 1
+        if (quantity < 1) quantity = 1;
         this.quantity = quantity;
     }
 
-    // Calculate total price = price * quantity
+    
+    public String getFullImagePath() {
+        return "/pkg223071132_project/images/" + imageFileName;
+    }
+
     public double getTotalPrice() {
         return price * quantity;
     }
