@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="371.0" prefWidth="387.0" spacing="10" style="-fx-background-color: #ffd6e0;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg223071132_project.edit_productController">
+      
+
+    <Label style="-fx-font-size: 20px;" text="Edit Product" />
+    
+    <Label text="Product ID:" />
+    <Label fx:id="idLabel" />
+
+    <Label text="Name:" />
+    <TextField fx:id="nameField" />
+
+    <Label text="Price:" />
+    <TextField fx:id="priceField" />
+
+    <Label text="Image:" />
+    <TextField fx:id="imageField" />
+
+    <Button onAction="#handleSave" text="Save Changes" />
+</VBox>
