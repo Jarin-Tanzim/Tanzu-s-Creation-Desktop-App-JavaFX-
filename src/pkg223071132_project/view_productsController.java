@@ -102,7 +102,7 @@ public class view_productsController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_product.fxml"));
         Parent root = loader.load();
 
-        // Get the controller and pass the product
+        
         edit_productController controller = loader.getController();
         controller.setProduct(product);
 
@@ -111,8 +111,7 @@ public class view_productsController implements Initializable {
         stage.setScene(new Scene(root));
         stage.show();
 
-        // Optionally close current window:
-        // ((Stage) productTable.getScene().getWindow()).close();
+       
 
     } catch (IOException e) {
         e.printStackTrace();
@@ -121,35 +120,50 @@ public class view_productsController implements Initializable {
 
 
     private void deleteProduct(Product product) {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/tanzu_app", "root", "1234");
-             PreparedStatement ps = conn.prepareStatement("DELETE FROM products WHERE id = ?")) {
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/tanzu_app", "root", "1234");
+         PreparedStatement ps = conn.prepareStatement("DELETE FROM products WHERE id = ?")) {
 
-            ps.setInt(1, product.getId());
-            int rows = ps.executeUpdate();
-            if (rows > 0) {
-                productList.remove(product);
-                System.out.println("Product deleted: " + product.getName());
-            }
+        ps.setInt(1, product.getId());
+        int rows = ps.executeUpdate();
+        if (rows > 0) {
+            productList.remove(product);
+            System.out.println("Product deleted: " + product.getName());
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Deleted");
+            alert.setHeaderText(null);
+            alert.setContentText("Product \"" + product.getName() + "\" deleted successfully!");
+            alert.showAndWait();
         }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+
+        
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Deletion Failed");
+        alert.setHeaderText(null);
+        alert.setContentText("An error occurred while deleting the product.");
+        alert.showAndWait();
     }
+}
+
 
     @FXML
 private void handleBackToAdmin(ActionEvent event) {
     try {
-        // Load the admin panel FXML
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("admin_panel.fxml"));
         Parent root = loader.load();
 
-        // Set the scene to a new stage
+        
         Stage stage = new Stage();
         stage.setTitle("Admin Panel");
         stage.setScene(new Scene(root));
         stage.show();
 
-        // Close the current view_products window
+       
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         currentStage.close();
         
