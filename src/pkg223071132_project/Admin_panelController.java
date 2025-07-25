@@ -122,5 +122,26 @@ private void HandleAddProducts(ActionEvent event) {
         e.printStackTrace();
     }
     }
-    
+    @FXML
+    private void handleViewProducts(ActionEvent event) {
+         try {
+       
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view_products.fxml"));
+        Parent root = loader.load();
+
+        // Set up the new stage (window)
+        Stage stage = new Stage();
+        stage.setTitle("View Products");
+        stage.setScene(new Scene(root));
+        stage.show();
+
+       
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+       
+    }
 }
