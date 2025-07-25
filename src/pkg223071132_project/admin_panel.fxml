@@ -17,9 +17,10 @@
     <Label layoutX="250" layoutY="100" styleClass="welcome-label" text="Welcome, Admin!" />
 
     
-    <VBox layoutX="192.0" layoutY="165.0" spacing="20">
+    <VBox layoutX="214.0" layoutY="165.0" prefHeight="203.0" prefWidth="309.0" spacing="20">
         <Button fx:id="ViewUserButton" onAction="#HandleUsers" styleClass="action-button" text="👥 View Users" />
         <Button fx:id="AddProductsButton" onAction="#HandleAddProducts" styleClass="action-button" text="➕ Add Products" />
+      <Button fx:id="ViewProductButton" onAction="#handleViewProducts" styleClass="action-button" text="🧾 View Products" />
         <Button fx:id="ViewCardButton" onAction="#handleVieworders" styleClass="action-button" text="🧾 View Orders" />
     </VBox>
 
