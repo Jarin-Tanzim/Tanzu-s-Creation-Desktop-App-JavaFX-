@@ -17,4 +17,5 @@
     <TextField fx:id="productImageField" promptText="Image URL" />
     <TextArea fx:id="productDescField" prefRowCount="2" promptText="Description" />
     <Button onAction="#handleAddProduct" text="Add Product" />
+   <Button onAction="#handleback" text="Back" />
 </VBox>
