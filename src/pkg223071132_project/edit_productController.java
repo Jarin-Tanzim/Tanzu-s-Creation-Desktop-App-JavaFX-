@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.sql.*;
+import javafx.scene.control.Alert;
 
 public class edit_productController implements Initializable {
 
@@ -50,7 +51,6 @@ private void handleSave(ActionEvent event) {
     try {
         double price = Double.parseDouble(priceText);
 
-        
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Tanzu_app", "root", "1234");
         String sql = "UPDATE products SET name = ?, price = ?, image_filename = ? WHERE id = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);
@@ -61,20 +61,35 @@ private void handleSave(ActionEvent event) {
 
         int rows = stmt.executeUpdate();
         if (rows > 0) {
-            System.out.println("Product updated successfully.");
+           
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Product updated successfully!");
+            alert.showAndWait();
+
+            
+            Stage stage = (Stage) nameField.getScene().getWindow();
+            stage.close();
         }
 
         stmt.close();
         conn.close();
 
-        // Close the edit window
-        Stage stage = (Stage) nameField.getScene().getWindow();
-        stage.close();
-
     } catch (NumberFormatException e) {
-        System.err.println("Invalid price format.");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid Input");
+        alert.setHeaderText(null);
+        alert.setContentText("Please enter a valid price.");
+        alert.showAndWait();
     } catch (SQLException e) {
         e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Database Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Failed to update the product.");
+        alert.showAndWait();
     }
 }
+
 }
