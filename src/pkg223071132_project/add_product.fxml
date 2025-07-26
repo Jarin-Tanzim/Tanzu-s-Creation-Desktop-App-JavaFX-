@@ -13,12 +13,12 @@
         <Insets bottom="20" left="40" right="40" top="20" />
     </padding>
     <Label prefHeight="27.0" prefWidth="481.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-background-color: pink;" text="                                  Add New Product" />
-    <TextField fx:id="productNameField" promptText="Product Name" style="-fx-background-color: #3498db;" styleClass="action-button">
+    <TextField fx:id="productNameField" promptText="Product Name" style="-fx-background-color: white;" styleClass="action-button">
       <font>
          <Font name="Arial" size="12.0" />
       </font></TextField>
-    <TextField fx:id="productPriceField" promptText="Price" style="-fx-background-color: #3498db;" styleClass="action-button" />
-    <TextField fx:id="productImageField" promptText="Image URL" style="-fx-background-color: #3498db;" styleClass="action-button" />
+    <TextField fx:id="productPriceField" promptText="Price" style="-fx-background-color: white;" styleClass="action-button" />
+    <TextField fx:id="productImageField" promptText="Image URL" style="-fx-background-color: white;" styleClass="action-button" />
     <TextArea fx:id="productDescField" prefRowCount="2" promptText="Description" />
     <Button onAction="#handleAddProduct" prefHeight="36.0" prefWidth="170.0" style="-fx-background-color: #3498db;" styleClass="logout-button" text="Add Product" />
    <Button onAction="#handleback" style="-fx-background-color: #3498db;" styleClass="logout-button" text="Back" />
