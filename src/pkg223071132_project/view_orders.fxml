@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" spacing="15" style="-fx-background-color: pink;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="pkg223071132_project.View_ordersController">
+<VBox alignment="TOP_CENTER" spacing="15" style="-fx-background-color: #ffe6f0;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pkg223071132_project.View_ordersController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
