@@ -53,7 +53,7 @@ public class Add_productController {
 
 // Load product list view
 try {
-   FXMLLoader loader = new FXMLLoader(getClass().getResource("product.fxml"));
+   FXMLLoader loader = new FXMLLoader(getClass().getResource("view_products.fxml"));
 Parent root = loader.load();
 Stage stage = (Stage) productNameField.getScene().getWindow();
 stage.setScene(new Scene(root));
